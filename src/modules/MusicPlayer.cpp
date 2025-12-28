@@ -19,14 +19,14 @@ float MusicPlayer::getTimePositionMs() {
 
   assertSong();
 
-  float timePositionSec = GetMusicTimePlayed(currentSong);
+  float timePositionSec = GetMusicTimePlayed(*currentSong);
 
-  float timePositionMs = timePositionSec / 1000.0f;
+  float timePositionMs = timePositionSec * 1000.0f;
 
   return timePositionMs;
 };
 
-Music MusicPlayer::getCurrentSong() {
+Music *MusicPlayer::getCurrentSong() {
   assertSong();
   return currentSong;
 };
@@ -39,13 +39,17 @@ void MusicPlayer::startPlayer() {
   startPlayer(currentSong);
 }
 
-void MusicPlayer::startPlayer(Music &song_) {
+void MusicPlayer::startPlayer(Music *song_) {
+
+  if (songPlaying)
+    StopMusicStream(*currentSong);
+
   currentSong = song_;
 
   hasSong = true;
   songPlaying = true;
 
-  PlayMusicStream(currentSong);
+  PlayMusicStream(*currentSong);
 }
 
 void MusicPlayer::stopPlayer() {
@@ -54,16 +58,21 @@ void MusicPlayer::stopPlayer() {
 
   songPlaying = false;
 
-  StopMusicStream(currentSong);
+  StopMusicStream(*currentSong);
 }
 
-void MusicPlayer::switchSong(Music &newSong) {
+void MusicPlayer::switchSong(Music *newSong) {
+  if (songPlaying) {
+    UnloadMusicStream(*currentSong);
+  };
   currentSong = newSong;
   hasSong = true;
 };
 
 // Main
 void MusicPlayer::update() { // Should be called once per frame
-  assertSong();
+  if (!assertSong())
+    return;
+  UpdateMusicStream(*currentSong);
   timePositionMs = getTimePositionMs();
 };
