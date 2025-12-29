@@ -4,7 +4,7 @@
 class MusicPlayer {
 private:
   float timePositionMs;
-  Music *currentSong = nullptr;
+  Music currentSong;
   bool hasSong = false;
   bool songPlaying = false;
 
@@ -15,15 +15,15 @@ public:
 
   // Fetches
   float getTimePositionMs();
-  Music *getCurrentSong();
+  Music getCurrentSong();
   bool getHasSong();
   bool getSongPlaying();
 
   // Actions
   void startPlayer();
-  void startPlayer(Music *song_);
+  void startPlayer(Music song_);
   void stopPlayer();
-  void switchSong(Music *newSong);
+  void switchSong(Music newSong);
 
   // Main
   void update();

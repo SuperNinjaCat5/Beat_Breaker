@@ -3,6 +3,7 @@ g++ src\main.cpp `
     src\modules\Metronome.cpp `
     src\modules\Composer.cpp `
     src\modules\Judge.cpp `
+    src\modules\Referee.cpp `
     -Iinclude `
     -o app `
     -lraylib -lopengl32 -lgdi32 -lwinmm

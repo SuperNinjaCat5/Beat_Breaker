@@ -2,6 +2,7 @@
 #include "modules/Judge.hpp"
 #include "modules/Metronome.hpp"
 #include "modules/MusicPlayer.hpp"
+#include "modules/Referee.hpp"
 #include "raylib.h"
 #include <iostream>
 
@@ -17,36 +18,26 @@ int main() {
   InitAudioDevice();
   SetTargetFPS(60);
 
-  // Composer
+  // Referee
+  Referee referee;
 
+  // Composer
   Composer composer;
 
-  composer.loadChart("levels/level_temp/chart.json");
-
   // Music
-
   MusicPlayer musicPlayer;
 
-  Music temp_song =
-      LoadMusicStream(composer.getCurrentChart().songPath.c_str());
-
-  musicPlayer.switchSong(&temp_song);
-
-  musicPlayer.startPlayer();
-
   // Metronome
-
   Metronome metronome;
 
-  metronome.setSongBpm(composer.getCurrentChart().bpm);
-
-  metronome.startMetronome();
-
   // Judge (jury executioner FROM MARVEL RIVALSSSSSSSSSSSSSSS)
-
   Judge judge;
 
-  judge.setChart(&composer);
+  // ########## Setup ##########
+
+  referee.setLevel(LEVELS::LEVEL_TEMP);
+
+  referee.startLevel(&musicPlayer, &metronome, &composer, &judge);
 
   // #####################################
   // Main loop
@@ -81,7 +72,7 @@ int main() {
   /// Music
 
   musicPlayer.stopPlayer();
-  UnloadMusicStream(temp_song);
+  UnloadMusicStream(musicPlayer.getCurrentSong());
 
   // Metronome
 
