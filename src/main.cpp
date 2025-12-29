@@ -64,12 +64,12 @@ int main() {
       break;
     };
 
-    display.update();
+    display.update(&metronome);
 
     // ########## Display ##########
 
     display.drawJudgementLine();
-    display.makeBeatLines();
+    display.makeBeatLines(&metronome);
 
     ClearBackground(BLACK);
 
