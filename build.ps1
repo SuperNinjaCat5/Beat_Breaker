@@ -4,6 +4,7 @@ g++ src\main.cpp `
     src\modules\Composer.cpp `
     src\modules\Judge.cpp `
     src\modules\Referee.cpp `
+    src\modules\Display.cpp `
     -Iinclude `
     -o app `
     -lraylib -lopengl32 -lgdi32 -lwinmm

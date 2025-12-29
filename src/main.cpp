@@ -1,4 +1,5 @@
 #include "modules/Composer.hpp"
+#include "modules/Display.hpp"
 #include "modules/Judge.hpp"
 #include "modules/Metronome.hpp"
 #include "modules/MusicPlayer.hpp"
@@ -56,7 +57,19 @@ int main() {
 
     bool passed = judge.judgeJuryEXECUTIONER(&metronome);
 
+    if (!referee.update(passed)) {
+      break;
+    };
+
     // ########## Display ##########
+
+    int screenWidth = GetScreenWidth();
+    int screenHeight = GetScreenHeight();
+
+    DrawLine(100, 0, 100, screenHeight, PURPLE); // JUDGEMENT LINE
+    for (int i = 1; i <= 7; i++) {
+      DrawLine(((i * 100) + 100), 0, ((i * 100) + 100), screenHeight, BLUE);
+    }
 
     ClearBackground(BLACK);
 

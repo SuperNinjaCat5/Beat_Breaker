@@ -45,6 +45,11 @@ void Referee::startLevel(MusicPlayer *musicPlayer_, Metronome *metronome_,
     return;
   };
 
+  // Set game
+
+  livesLeft = 5;
+  score = 0;
+
   // Load chart
   composer_->loadChart(currentLevel.chartPath);
 
@@ -72,4 +77,18 @@ void Referee::stopLevel(MusicPlayer *musicPlayer_, Metronome *metronome_) {
   // Metronome
 
   metronome_->stopMetronome();
+};
+
+bool Referee::update(bool &passed) { // false if lost, true if survive
+  if (passed) {
+    score++;
+  } else {
+    livesLeft--;
+  }
+
+  if (livesLeft <= 0) { // if dead
+    return false;
+  };
+
+  return true;
 };

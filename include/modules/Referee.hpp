@@ -26,6 +26,10 @@ private:
   bool hasLevel;
   bool levelStarted;
 
+  // Player properties
+  int livesLeft = 5;
+  int score = 0;
+
 public:
   // Special
   Referee(); // Constructor
@@ -40,5 +44,5 @@ public:
   void startLevel(MusicPlayer *musicPlayer_, Metronome *metronome_,
                   Composer *composer_, Judge *judge_);
   void stopLevel(MusicPlayer *musicPlayer_, Metronome *metronome_);
-  void update();
+  bool update(bool &passed);
 };
