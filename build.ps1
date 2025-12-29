@@ -2,6 +2,7 @@ g++ src\main.cpp `
     src\modules\MusicPlayer.cpp `
     src\modules\Metronome.cpp `
     src\modules\Composer.cpp `
+    src\modules\Judge.cpp `
     -Iinclude `
     -o app `
     -lraylib -lopengl32 -lgdi32 -lwinmm

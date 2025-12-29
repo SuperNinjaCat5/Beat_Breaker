@@ -46,7 +46,7 @@ Note Composer::getNextNote(int lastBeat) {
       return note;
     }
   };
-  return Note{-1, -1}; // PLEASE NEVER HAPPEN OH GOD
+  return Note{-1, -1}; // -1 if no notes left
 };
 
 Chart makeChart(const std::string path) { // make a chart struct from json
