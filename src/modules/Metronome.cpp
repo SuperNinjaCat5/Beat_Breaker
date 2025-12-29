@@ -6,8 +6,17 @@ Metronome::Metronome() {};
 // Fetches
 int Metronome::getBpm() { return bpm; };
 float Metronome::getBeatDurationMs() { return beatDurationMs; };
-int Metronome::getLastBeat() { return lastBeat; };
+
 float Metronome::getNextBeatPosition() { return nextBeatPosition; };
+
+int Metronome::getLastBeat() { return lastBeat; };
+int Metronome::getMarginMs() { return marginMs; };
+
+int Metronome::getActiveBeat() { return activeBeat; }; // USE THIS FOR CHECKS
+float Metronome::getActiveBeatStartPosition() {
+  return activeBeatStartPosition;
+};
+float Metronome::getActiveBeatEndPosition() { return activeBeatEndPosition; };
 
 // Actions
 
@@ -27,12 +36,21 @@ void Metronome::stopMetronome() { // lwk does nothing jst for vibes
   float nextBeatPosition = beatDurationMs;
 }
 
-int Metronome::update(float currentTimePositionMs) { // call each frame, updates
-                                                     // beat and returns beat #
-  if (currentTimePositionMs >= nextBeatPosition) {
-    lastBeat += 1;
+void Metronome::update(
+    float currentTimePositionMs) { // call each frame, updates beat
+  while (currentTimePositionMs >= nextBeatPosition) {
+    lastBeat++;
     nextBeatPosition += beatDurationMs;
-    return lastBeat;
   }
-  return lastBeat;
-};
+
+  float beatTime = lastBeat * beatDurationMs;
+  activeBeatStartPosition = beatTime - marginMs;
+  activeBeatEndPosition = beatTime + marginMs;
+
+  if (activeBeatEndPosition >= currentTimePositionMs &&
+      currentTimePositionMs >= activeBeatStartPosition) {
+    activeBeat = lastBeat;
+  } else {
+    activeBeat = -1;
+  };
+}

@@ -48,7 +48,7 @@ int main() {
 
     metronome.update(musicPlayer.getTimePositionMs());
 
-    std::cout << metronome.getLastBeat() << "\n";
+    std::cout << metronome.getActiveBeat() << "\n";
 
     EndDrawing();
   }
