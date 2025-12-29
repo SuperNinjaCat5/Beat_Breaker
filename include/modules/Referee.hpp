@@ -39,6 +39,6 @@ public:
   void setLevel(Level level);
   void startLevel(MusicPlayer *musicPlayer_, Metronome *metronome_,
                   Composer *composer_, Judge *judge_);
-  void stopLevel();
+  void stopLevel(MusicPlayer *musicPlayer_, Metronome *metronome_);
   void update();
 };

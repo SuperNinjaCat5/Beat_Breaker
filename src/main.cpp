@@ -56,8 +56,6 @@ int main() {
 
     bool passed = judge.judgeJuryEXECUTIONER(&metronome);
 
-    std::cout << passed << "\n";
-
     // ########## Display ##########
 
     ClearBackground(BLACK);
@@ -69,14 +67,7 @@ int main() {
   // Shutdown
   // #####################################
 
-  /// Music
-
-  musicPlayer.stopPlayer();
-  UnloadMusicStream(musicPlayer.getCurrentSong());
-
-  // Metronome
-
-  metronome.stopMetronome();
+  referee.stopLevel(&musicPlayer, &metronome);
 
   // Windows
 

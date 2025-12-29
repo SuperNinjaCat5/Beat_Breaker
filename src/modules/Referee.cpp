@@ -62,3 +62,14 @@ void Referee::startLevel(MusicPlayer *musicPlayer_, Metronome *metronome_,
   musicPlayer_->startPlayer();
   metronome_->startMetronome();
 };
+
+void Referee::stopLevel(MusicPlayer *musicPlayer_, Metronome *metronome_) {
+  /// Music
+
+  musicPlayer_->stopPlayer();
+  UnloadMusicStream(musicPlayer_->getCurrentSong());
+
+  // Metronome
+
+  metronome_->stopMetronome();
+};
