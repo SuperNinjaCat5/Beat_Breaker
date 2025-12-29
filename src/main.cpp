@@ -4,8 +4,8 @@
 #include "modules/Metronome.hpp"
 #include "modules/MusicPlayer.hpp"
 #include "modules/Referee.hpp"
-#include "raylib.h"
 #include <iostream>
+#include <raylib.h>
 
 int main() {
 
@@ -34,6 +34,9 @@ int main() {
   // Judge (jury executioner FROM MARVEL RIVALSSSSSSSSSSSSSSS)
   Judge judge;
 
+  // Display
+  Display display;
+
   // ########## Setup ##########
 
   referee.setLevel(LEVELS::LEVEL_TEMP);
@@ -61,15 +64,12 @@ int main() {
       break;
     };
 
+    display.update();
+
     // ########## Display ##########
 
-    int screenWidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight();
-
-    DrawLine(100, 0, 100, screenHeight, PURPLE); // JUDGEMENT LINE
-    for (int i = 1; i <= 7; i++) {
-      DrawLine(((i * 100) + 100), 0, ((i * 100) + 100), screenHeight, BLUE);
-    }
+    display.drawJudgementLine();
+    display.makeBeatLines();
 
     ClearBackground(BLACK);
 
