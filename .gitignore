@@ -19,6 +19,7 @@ Thumbs.db
 *.exe
 *.out
 *.app
+/dist/
 
 # CMake
 /build/

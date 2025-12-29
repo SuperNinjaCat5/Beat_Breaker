@@ -64,8 +64,6 @@ int main() {
 
       ClearBackground(BLACK);
 
-      std::cout << startMenu.getSelectedItem() << "\n";
-
       if (startAction == "Start Game") {
         EndDrawing();
         continue;
@@ -92,6 +90,10 @@ int main() {
 
     // #####################################
     // LEVEL
+    // #####################################
+
+    // #####################################
+    // GAME OVER
     // #####################################
 
     // ########## Logic ##########
