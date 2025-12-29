@@ -1,11 +1,21 @@
+#include "modules/Metronome.hpp"
 #include "modules/MusicPlayer.hpp"
 #include "raylib.h"
 #include <iostream>
 
 int main() {
+
+  // #####################################
+  // Setup
+  // #####################################
+
+  // Window
+
   InitWindow(800, 600, "Beat Breaker");
   InitAudioDevice();
   SetTargetFPS(60);
+
+  // Music
 
   MusicPlayer musicPlayer;
 
@@ -17,19 +27,46 @@ int main() {
 
   musicPlayer.startPlayer();
 
+  // Metronome
+
+  Metronome metronome;
+
+  metronome.setSongBpm(120);
+
+  metronome.startMetronome();
+
+  // #####################################
+  // Main loop
+  // #####################################
+
   while (!WindowShouldClose()) {
     BeginDrawing();
 
     ClearBackground(BLACK);
 
     musicPlayer.update();
-    std::cout << musicPlayer.getTimePositionMs() << "\n";
+
+    metronome.update(musicPlayer.getTimePositionMs());
+
+    std::cout << metronome.getLastBeat() << "\n";
 
     EndDrawing();
   }
 
+  // #####################################
+  // Shutdown
+  // #####################################
+
+  /// Music
+
   musicPlayer.stopPlayer();
   UnloadMusicStream(temp_song);
+
+  // Metronome
+
+  metronome.stopMetronome();
+
+  // Windows
 
   CloseWindow();
 }

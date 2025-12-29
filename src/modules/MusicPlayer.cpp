@@ -31,6 +31,10 @@ Music *MusicPlayer::getCurrentSong() {
   return currentSong;
 };
 
+bool MusicPlayer::getHasSong() { return hasSong; };
+
+bool MusicPlayer::getSongPlaying() { return songPlaying; };
+
 // Actions
 void MusicPlayer::startPlayer() {
 

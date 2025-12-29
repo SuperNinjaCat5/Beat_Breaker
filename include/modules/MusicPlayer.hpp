@@ -5,11 +5,10 @@ class MusicPlayer {
 private:
   float timePositionMs;
   Music *currentSong = nullptr;
-
-public:
   bool hasSong = false;
   bool songPlaying = false;
 
+public:
   // Special
   MusicPlayer(); // Constructor
   bool assertSong();
@@ -17,6 +16,8 @@ public:
   // Fetches
   float getTimePositionMs();
   Music *getCurrentSong();
+  bool getHasSong();
+  bool getSongPlaying();
 
   // Actions
   void startPlayer();
