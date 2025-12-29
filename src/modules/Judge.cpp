@@ -18,8 +18,10 @@ void Judge::setChart(Composer *composer_) {
 
 bool Judge::judgeJuryEXECUTIONER(Metronome *metronome) {
   if (IsKeyPressed(KEY_SPACE)) {
-    if (currentGoalBeat == (metronome->getActiveBeat())) {
-      return true;
+    if (currentGoalBeat != -1) {
+      if (currentGoalBeat == (metronome->getActiveBeat())) {
+        return true;
+      };
     };
   };
   return false;

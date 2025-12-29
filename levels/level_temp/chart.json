@@ -1,6 +1,6 @@
 {
     "name": "But First, A Word from our Sponsors...",
-    "songPath": "/assets/audio/But-First-A-Word-from-our.mp3",
+    "songPath": "assets/audio/But-First-A-Word-from-our.mp3",
     "bpm": 120,
     "notes": [
         { "beat": 5, "subBeat": 0.0 },
