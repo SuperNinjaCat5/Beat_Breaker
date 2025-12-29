@@ -13,7 +13,7 @@ Composer::Composer() {}; // Constructor
 Chart Composer::getCurrentChart() { return currentChart; };
 
 // Actions
-void Composer::loadChart(const std::string path) {
+void Composer::loadChart(const std::string path) { // load chart from file
   Chart chart;
   chart.chartPath = path;
 
@@ -40,7 +40,7 @@ void Composer::loadChart(const std::string path) {
   currentChart = chart;
 };
 
-Chart makeChart(const std::string path) {
+Chart makeChart(const std::string path) { // make a chart struct from json
   Chart chart;
   chart.chartPath = path;
 
