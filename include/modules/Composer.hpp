@@ -27,6 +27,7 @@ public:
 
   // Fetches
   Chart getCurrentChart();
+  Note getNextNote(int lastBeat);
 
   // Actions
   void loadChart(const std::string path);

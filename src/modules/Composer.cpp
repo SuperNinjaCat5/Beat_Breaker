@@ -40,6 +40,15 @@ void Composer::loadChart(const std::string path) { // load chart from file
   currentChart = chart;
 };
 
+Note Composer::getNextNote(int lastBeat) {
+  for (auto &note : currentChart.notes) {
+    if (note.beat >= lastBeat) {
+      return note;
+    }
+  };
+  return Note{-1, -1}; // PLEASE NEVER HAPPEN OH GOD
+};
+
 Chart makeChart(const std::string path) { // make a chart struct from json
   Chart chart;
   chart.chartPath = path;

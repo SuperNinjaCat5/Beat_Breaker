@@ -1,3 +1,4 @@
+#include "modules/Composer.hpp"
 #include "modules/Metronome.hpp"
 #include "modules/MusicPlayer.hpp"
 #include "raylib.h"
@@ -27,6 +28,12 @@ int main() {
 
   musicPlayer.startPlayer();
 
+  // Composer
+
+  Composer composer;
+
+  composer.loadChart("levels/level_temp/chart.json");
+
   // Metronome
 
   Metronome metronome;
@@ -48,7 +55,7 @@ int main() {
 
     metronome.update(musicPlayer.getTimePositionMs());
 
-    std::cout << metronome.getActiveBeat() << "\n";
+    std::cout << composer.getNextNote(metronome.getLastBeat()).beat << "\n";
 
     EndDrawing();
   }
