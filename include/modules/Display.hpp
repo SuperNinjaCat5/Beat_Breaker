@@ -33,5 +33,5 @@ public:
 
   // Draws
   void drawJudgementLine();
-  void makeBeatLines(Metronome *metronome_);
+  void makeBeatLines(Metronome *metronome_, bool passed);
 };

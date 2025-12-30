@@ -19,5 +19,6 @@ public:
   // Actions
   void setChart(Composer *composer_);
   void update(int lastbeat);
-  bool judgeJuryEXECUTIONER(Metronome *metronome);
+  bool judgeJuryEXECUTIONER(Metronome *metronome, bool spacePressed,
+                            bool &inputJudged);
 };

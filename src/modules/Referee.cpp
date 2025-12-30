@@ -23,7 +23,8 @@ std::vector<Level> LEVEL_LIST = {LEVEL_TEMP};
 // ##########
 
 // Speical
-Referee::Referee() {}; // Constructor
+Referee::Referee()
+    : hasLevel(false), levelStarted(false), lastBeatTouched(-1) {};
 
 // Fetches
 Level Referee::getCurrentLevel() { return currentLevel; };
@@ -31,6 +32,12 @@ Level Referee::getCurrentLevel() { return currentLevel; };
 bool Referee::getHasLevel() { return hasLevel; };
 
 bool Referee::getLevelStarted() { return levelStarted; };
+
+int Referee::getLastBeatTouched() { return lastBeatTouched; };
+
+int Referee::getLivesLeft() { return livesLeft; };
+
+int Referee::getScore() { return score; };
 
 // Actions
 
@@ -51,6 +58,8 @@ void Referee::startLevel(MusicPlayer *musicPlayer_, Metronome *metronome_,
 
   livesLeft = 5;
   score = 0;
+  lastBeatTouched = -1;
+  levelStarted = true;
 
   // Load chart
   composer_->loadChart(currentLevel.chartPath);
@@ -83,18 +92,32 @@ void Referee::stopLevel(MusicPlayer *musicPlayer_, Metronome *metronome_) {
   // Metronome
 
   metronome_->stopMetronome();
+
+  levelStarted = false;
 };
 
-bool Referee::update(bool &passed) { // false if lost, true if survive
-  if (passed) {
-    score++;
-  } else {
-    livesLeft--;
+bool Referee::update(bool &passed, int currentGoalBeat_, int activeBeat_,
+                     int lastBeat_, bool inputJudged) {
+  if (currentGoalBeat_ == -1) {
+    return true;
+  }
+  if (!inputJudged) {
+    return livesLeft > 0;
   }
 
-  if (livesLeft <= 0) { // if dead
-    return false;
-  };
+  int beatToMark = (activeBeat_ != -1) ? activeBeat_ : lastBeat_;
 
-  return true;
-};
+  if (beatToMark != lastBeatTouched) {
+    lastBeatTouched = beatToMark;
+
+    if (!passed) {
+      livesLeft--;
+      if (livesLeft < 0)
+        livesLeft = 0;
+    } else {
+      score++;
+    }
+  }
+
+  return livesLeft > 0;
+}
