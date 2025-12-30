@@ -5,7 +5,7 @@
 #include <raylib.h>
 
 struct Beatline {
-  int displayPosition; // 1-8 (1 judgment, 8 entrance)
+  int displayPosition; // -3 to 8 (-3=passed, 0=judgment, 8=entrance)
   bool hasBeat = false;
 };
 
@@ -13,9 +13,8 @@ class Display {
 private:
   int screenWidth;
   int screenHeight;
-  float beatProgress;
   int currentJudgementLineBeat;
-  std::array<Beatline, 8> upcomingBeats;
+  std::array<Beatline, 12> upcomingBeats;
   Chart currentChart;
 
 public:
@@ -26,10 +25,10 @@ public:
   int getScreenWidth();
   int getScreenHeight();
   Chart getCurrentChart();
-  std::array<Beatline, 8> &getUpcomingBeats();
+  std::array<Beatline, 12> &getUpcomingBeats();
 
   // Actions ##############################
-  void update(Metronome *metronome_, float currentMusicTimeMs);
+  void update(Metronome *metronome_);
   void setChart(Composer *composer_);
 
   // Draws

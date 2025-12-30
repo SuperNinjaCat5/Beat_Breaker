@@ -106,13 +106,15 @@ int main() {
 
     bool passed = judge.judgeJuryEXECUTIONER(&metronome);
 
-    std::cout << std::boolalpha << passed << "\n";
+    if (!passed) {
+      std::cout << std::boolalpha << passed << "\n";
+    }
 
     if (!referee.update(passed)) {
       break;
     };
 
-    display.update(&metronome, musicPlayer.getTimePositionMs());
+    display.update(&metronome);
 
     // ########## Display ##########
 

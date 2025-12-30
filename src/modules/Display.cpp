@@ -12,54 +12,31 @@ Display::Display() {}; // Consturctor
 int Display::getScreenWidth() { return screenWidth; }
 int Display::getScreenHeight() { return screenHeight; }
 Chart Display::getCurrentChart() { return currentChart; };
-std::array<Beatline, 8> &Display::getUpcomingBeats() { return upcomingBeats; };
+std::array<Beatline, 12> &Display::getUpcomingBeats() { return upcomingBeats; };
 
 // Actions ##############################
-void Display::update(Metronome *metronome_,
-                     float currentMusicTimeMs) { // STILL CRAP REDO!!!!
+void Display::update(
+    Metronome *metronome_) { // DISPLAY WORKS!! BUT JUDGEMENT IS COOKED FIXXXX
   screenWidth = GetScreenWidth();
   screenHeight = GetScreenHeight();
 
   currentJudgementLineBeat = metronome_->getLastBeat();
 
-  float beatDuration = metronome_->getBeatDurationMs();
-  float lastBeatTime = metronome_->getLastBeat() * beatDuration;
-  beatProgress = (currentMusicTimeMs - lastBeatTime) / beatDuration;
+  for (int i = -3; i <= 8; i++) {
+    Beatline beatline{};
+    beatline.displayPosition = i;
 
-  if (beatProgress < 0.0f)
-    beatProgress = 0.0f;
-  if (beatProgress > 1.0f)
-    beatProgress = 1.0f;
+    int targetBeat = metronome_->getLastBeat() + i;
 
-  for (int i = 0; i <= 7; i++) {
-    Beatline beatline;
-
-    beatline.hasBeat = false;
-    beatline.displayPosition = i + 1;
-
-    int targetBeat = currentJudgementLineBeat + i;
-
-    if (i == 0) {
-      int activeBeat = metronome_->getActiveBeat();
-      if (activeBeat != -1) {
-        for (const auto &note : currentChart.notes) {
-          if (note.beat == activeBeat) {
-            beatline.hasBeat = true;
-            break;
-          }
-        }
-      }
-    } else {
-      for (const auto &note : currentChart.notes) {
-        if (note.beat == targetBeat) {
-          beatline.hasBeat = true;
-          break;
-        }
+    for (const auto &note : currentChart.notes) {
+      if (note.beat == targetBeat) {
+        beatline.hasBeat = true;
+        break;
       }
     }
 
-    upcomingBeats.at(i) = beatline;
-  };
+    upcomingBeats.at(i + 3) = beatline; // shoudl shfit index: -3 -> 0, 8 -> 11
+  }
 };
 
 void Display::setChart(Composer *composer_) {
@@ -68,18 +45,21 @@ void Display::setChart(Composer *composer_) {
 
 // Draws
 void Display::drawJudgementLine() {
-  DrawLine(100, 0, 100, screenHeight, PURPLE); // JUDGEMENT LINE
+  DrawLine(200, 0, 200, screenHeight, PURPLE); // JUDGEMENT LINE
 };
 
 void Display::makeBeatLines(Metronome *metronome_) {
-  int judgementX = 100;
-  int spacingBetweenLines = 100;
+  int judgementX = 200;
+  int spacing = 100;
 
-  for (auto &line : upcomingBeats) {
-    if (line.hasBeat == true) {
-      int xPos = line.displayPosition * 100;
-
-      DrawCircle(xPos, 300, 50, BLUE);
+  for (const auto &line : upcomingBeats) {
+    if (!line.hasBeat) {
+      continue;
     }
-  };
+
+    // Position 0 = judgment line, negative = left of judgment, positive = right
+    int xPos = judgementX + (line.displayPosition * spacing);
+
+    DrawCircle(xPos, 300, 50, BLUE);
+  }
 }
