@@ -32,6 +32,12 @@ bool Referee::getHasLevel() { return hasLevel; };
 
 bool Referee::getLevelStarted() { return levelStarted; };
 
+int Referee::getLivesLeft() { return livesLeft; };
+
+int Referee::getScore() { return score; };
+
+int Referee::getLastBeatTouched() { return lastBeatTouched; };
+
 // Actions
 
 void Referee::setLevel(Level level) {
@@ -85,16 +91,19 @@ void Referee::stopLevel(MusicPlayer *musicPlayer_, Metronome *metronome_) {
   metronome_->stopMetronome();
 };
 
-bool Referee::update(bool &passed) { // false if lost, true if survive
-  if (passed) {
-    score++;
-  } else {
-    livesLeft--;
+bool Referee::update(bool &passed, int activeBeat) {
+
+  if ((activeBeat == -1) || (activeBeat == lastBeatTouched)) {
+    return livesLeft > 0;
   }
 
-  if (livesLeft <= 0) { // if dead
-    return false;
+  if (!passed) {
+    livesLeft--;
+  } else {
+    score++;
   };
 
-  return true;
+  lastBeatTouched = activeBeat;
+
+  return livesLeft > 0;
 };

@@ -107,10 +107,10 @@ int main() {
     bool passed = judge.judgeJuryEXECUTIONER(&metronome);
 
     if (!passed) {
-      std::cout << std::boolalpha << passed << "\n";
+      std::cout << std::boolalpha << referee.getLivesLeft() << "\n";
     }
 
-    if (!referee.update(passed)) {
+    if (!referee.update(passed, metronome.getActiveBeat())) {
       break;
     };
 

@@ -17,20 +17,23 @@ void Judge::setChart(Composer *composer_) {
 };
 
 bool Judge::judgeJuryEXECUTIONER(Metronome *metronome) {
-  if (IsKeyPressed(KEY_SPACE)) {
-    if (currentGoalBeat == -1) {
-      return false;
-    }
+  int activeBeat = metronome->getActiveBeat();
 
-    if (currentGoalBeat == metronome->getActiveBeat()) {
-      return true;
-    } else {
-      return false;
-    }
+  if (currentGoalBeat == -1) {
+    return true;
+  };
+
+  if (IsKeyPressed(KEY_SPACE)) {
+    return activeBeat == currentGoalBeat;
+  };
+
+  if (activeBeat == currentGoalBeat) {
+    return false;
   }
 
   return true;
 }
+
 void Judge::update(int lastbeat) {
   for (auto &note : currentChart.notes) {
     if (note.beat >= lastbeat) {

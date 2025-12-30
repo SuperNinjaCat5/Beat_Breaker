@@ -30,6 +30,7 @@ private:
   // Player properties
   int livesLeft = 5;
   int score = 0;
+  int lastBeatTouched = -1;
 
 public:
   // Special
@@ -40,10 +41,14 @@ public:
   bool getHasLevel();
   bool getLevelStarted();
 
+  int getLivesLeft();
+  int getScore();
+  int getLastBeatTouched();
+
   // Actions
   void setLevel(Level level);
   void startLevel(MusicPlayer *musicPlayer_, Metronome *metronome_,
                   Composer *composer_, Judge *judge_, Display *display_);
   void stopLevel(MusicPlayer *musicPlayer_, Metronome *metronome_);
-  bool update(bool &passed);
+  bool update(bool &passed, int activeBeat);
 };
