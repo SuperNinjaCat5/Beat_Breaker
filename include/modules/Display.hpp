@@ -6,13 +6,14 @@
 
 struct Beatline {
   int displayPosition; // 1-8 (1 judgment, 8 entrance)
-  bool hasBeat;
+  bool hasBeat = false;
 };
 
 class Display {
 private:
   int screenWidth;
   int screenHeight;
+  float beatProgress;
   int currentJudgementLineBeat;
   std::array<Beatline, 8> upcomingBeats;
   Chart currentChart;
@@ -28,7 +29,7 @@ public:
   std::array<Beatline, 8> &getUpcomingBeats();
 
   // Actions ##############################
-  void update(Metronome *metronome_);
+  void update(Metronome *metronome_, float currentMusicTimeMs);
   void setChart(Composer *composer_);
 
   // Draws

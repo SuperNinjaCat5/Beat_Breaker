@@ -1,5 +1,6 @@
 #include "modules/Referee.hpp"
 #include "modules/Composer.hpp"
+#include "modules/Display.hpp"
 #include "modules/Judge.hpp"
 #include "modules/Metronome.hpp"
 #include "modules/MusicPlayer.hpp"
@@ -39,7 +40,8 @@ void Referee::setLevel(Level level) {
 };
 
 void Referee::startLevel(MusicPlayer *musicPlayer_, Metronome *metronome_,
-                         Composer *composer_, Judge *judge_) {
+                         Composer *composer_, Judge *judge_,
+                         Display *display_) {
   if (!hasLevel) {
     std::cerr << "Referee could not start Level, set it first!";
     return;
@@ -62,6 +64,10 @@ void Referee::startLevel(MusicPlayer *musicPlayer_, Metronome *metronome_,
 
   // Set judge
   judge_->setChart(&(*composer_));
+
+  // Set display
+
+  display_->setChart(composer_);
 
   // Start
   musicPlayer_->startPlayer();

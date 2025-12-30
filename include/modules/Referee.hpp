@@ -1,5 +1,6 @@
 #pragma once
 #include "modules/Composer.hpp"
+#include "modules/Display.hpp"
 #include "modules/Judge.hpp"
 #include "modules/Metronome.hpp"
 #include "modules/MusicPlayer.hpp"
@@ -42,7 +43,7 @@ public:
   // Actions
   void setLevel(Level level);
   void startLevel(MusicPlayer *musicPlayer_, Metronome *metronome_,
-                  Composer *composer_, Judge *judge_);
+                  Composer *composer_, Judge *judge_, Display *display_);
   void stopLevel(MusicPlayer *musicPlayer_, Metronome *metronome_);
   bool update(bool &passed);
 };

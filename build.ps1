@@ -1,3 +1,5 @@
+Write-Host "Building..."
+
 g++ src\main.cpp `
     src\modules\MusicPlayer.cpp `
     src\modules\Metronome.cpp `

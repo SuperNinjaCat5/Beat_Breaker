@@ -23,12 +23,16 @@ if ($LASTEXITCODE -eq 0) {
     Copy-Item "BeatBreaker.exe" ".\dist\"
     
     Copy-Item "C:\msys64\mingw64\bin\libraylib.dll" ".\dist\" -ErrorAction SilentlyContinue
+    Copy-Item "C:\msys64\mingw64\bin\libgcc_s_seh-1.dll" ".\dist\" -ErrorAction SilentlyContinue
+    Copy-Item "C:\msys64\mingw64\bin\libstdc++-6.dll" ".\dist\" -ErrorAction SilentlyContinue
+    Copy-Item "C:\msys64\mingw64\bin\glfw3.dll" ".\dist\" -ErrorAction SilentlyContinue
+    Copy-Item "C:\msys64\mingw64\bin\libwinpthread-1.dll" ".\dist\" -ErrorAction SilentlyContinue
     
     Copy-Item "assets" ".\dist\assets" -Recurse
     Copy-Item "levels" ".\dist\levels" -Recurse
     
     Write-Host "Distribution folder created at .\dist\"
-    Write-Host "Zip this folder to share!"
+    Write-Host "Zip this folder"
 } else {
     Write-Host "Build failed!"
 }

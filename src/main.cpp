@@ -44,7 +44,7 @@ int main() {
 
   referee.setLevel(LEVELS::LEVEL_TEMP);
 
-  referee.startLevel(&musicPlayer, &metronome, &composer, &judge);
+  referee.startLevel(&musicPlayer, &metronome, &composer, &judge, &display);
 
   // #####################################
   // Main loop
@@ -106,11 +106,13 @@ int main() {
 
     bool passed = judge.judgeJuryEXECUTIONER(&metronome);
 
+    std::cout << std::boolalpha << passed << "\n";
+
     if (!referee.update(passed)) {
       break;
     };
 
-    display.update(&metronome);
+    display.update(&metronome, musicPlayer.getTimePositionMs());
 
     // ########## Display ##########
 

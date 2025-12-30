@@ -2,6 +2,7 @@
 #include "modules/Composer.hpp"
 #include "modules/Metronome.hpp"
 #include <array>
+#include <iostream>
 #include <raylib.h>
 
 // Speical
@@ -14,20 +15,49 @@ Chart Display::getCurrentChart() { return currentChart; };
 std::array<Beatline, 8> &Display::getUpcomingBeats() { return upcomingBeats; };
 
 // Actions ##############################
-void Display::update(Metronome *metronome_) {
+void Display::update(Metronome *metronome_,
+                     float currentMusicTimeMs) { // STILL CRAP REDO!!!!
   screenWidth = GetScreenWidth();
   screenHeight = GetScreenHeight();
 
   currentJudgementLineBeat = metronome_->getLastBeat();
 
+  float beatDuration = metronome_->getBeatDurationMs();
+  float lastBeatTime = metronome_->getLastBeat() * beatDuration;
+  beatProgress = (currentMusicTimeMs - lastBeatTime) / beatDuration;
+
+  if (beatProgress < 0.0f)
+    beatProgress = 0.0f;
+  if (beatProgress > 1.0f)
+    beatProgress = 1.0f;
+
   for (int i = 0; i <= 7; i++) {
     Beatline beatline;
-    if ((currentJudgementLineBeat + i) < currentChart.notes.size()) {
-      if (currentChart.notes.at(currentJudgementLineBeat + i).beat != -1) {
-        beatline.hasBeat = true;
-      };
-    };
+
+    beatline.hasBeat = false;
     beatline.displayPosition = i + 1;
+
+    int targetBeat = currentJudgementLineBeat + i;
+
+    if (i == 0) {
+      int activeBeat = metronome_->getActiveBeat();
+      if (activeBeat != -1) {
+        for (const auto &note : currentChart.notes) {
+          if (note.beat == activeBeat) {
+            beatline.hasBeat = true;
+            break;
+          }
+        }
+      }
+    } else {
+      for (const auto &note : currentChart.notes) {
+        if (note.beat == targetBeat) {
+          beatline.hasBeat = true;
+          break;
+        }
+      }
+    }
+
     upcomingBeats.at(i) = beatline;
   };
 };
@@ -41,27 +71,15 @@ void Display::drawJudgementLine() {
   DrawLine(100, 0, 100, screenHeight, PURPLE); // JUDGEMENT LINE
 };
 
-void Display::makeBeatLines(Metronome *metronome_) { // redo later BROKENNNN
+void Display::makeBeatLines(Metronome *metronome_) {
   int judgementX = 100;
-  float speed = 200.0f;
-  for (int i = 0; i < 8; i++) {
-    if (!upcomingBeats.at(i).hasBeat)
-      continue;
+  int spacingBetweenLines = 100;
 
-    int beatIndex = currentJudgementLineBeat + i;
-    if (beatIndex >= currentChart.notes.size())
-      continue;
+  for (auto &line : upcomingBeats) {
+    if (line.hasBeat == true) {
+      int xPos = line.displayPosition * 100;
 
-    float beatTimeMs =
-        currentChart.notes.at(beatIndex).beat * metronome_->getBeatDurationMs();
-
-    float currentTimeMs =
-        metronome_->getLastBeat() * metronome_->getBeatDurationMs();
-
-    float timeUntilBeatMs = beatTimeMs - currentTimeMs;
-
-    int xPos = judgementX + timeUntilBeatMs * speed / 1000.0f;
-
-    DrawCircle(xPos, 300, 50, BLUE);
-  }
+      DrawCircle(xPos, 300, 50, BLUE);
+    }
+  };
 }
