@@ -24,9 +24,8 @@ extern std::vector<Level> LEVEL_LIST;
 class Referee {
 private:
   Level currentLevel;
-  bool hasLevel = false;
-  bool levelStarted = false;
-  int lastBeatTouched = -1;
+  bool hasLevel;
+  bool levelStarted;
 
   // Player properties
   int livesLeft = 5;
@@ -40,15 +39,11 @@ public:
   Level getCurrentLevel();
   bool getHasLevel();
   bool getLevelStarted();
-  int getLastBeatTouched();
-  int getLivesLeft();
-  int getScore();
 
   // Actions
   void setLevel(Level level);
   void startLevel(MusicPlayer *musicPlayer_, Metronome *metronome_,
                   Composer *composer_, Judge *judge_, Display *display_);
   void stopLevel(MusicPlayer *musicPlayer_, Metronome *metronome_);
-  bool update(bool &passed, int currentGoalBeat_, int activeBeat_,
-              int lastBeat_, bool inputJudged);
+  bool update(bool &passed);
 };

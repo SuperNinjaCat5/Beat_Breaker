@@ -16,32 +16,21 @@ void Judge::setChart(Composer *composer_) {
   currentChart = composer_->getCurrentChart();
 };
 
-bool Judge::judgeJuryEXECUTIONER(Metronome *metronome, bool spacePressed,
-                                 bool &inputJudged) {
-  inputJudged = false;
-
-  if (spacePressed) {
-    inputJudged = true;
-
-    if (currentGoalBeat == -1) { // If space w/ no note fail
+bool Judge::judgeJuryEXECUTIONER(Metronome *metronome) {
+  if (IsKeyPressed(KEY_SPACE)) {
+    if (currentGoalBeat == -1) {
       return false;
     }
 
-    if (currentGoalBeat == metronome->getActiveBeat()) { // if space & note pass
+    if (currentGoalBeat == metronome->getActiveBeat()) {
       return true;
     } else {
       return false;
     }
-  } else {
-    if (currentGoalBeat == metronome->getActiveBeat()) { // no space but note
-      inputJudged = true;
-      return false;
-    }
-  };
+  }
 
   return true;
 }
-
 void Judge::update(int lastbeat) {
   for (auto &note : currentChart.notes) {
     if (note.beat >= lastbeat) {

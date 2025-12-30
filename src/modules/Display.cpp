@@ -48,7 +48,7 @@ void Display::drawJudgementLine() {
   DrawLine(200, 0, 200, screenHeight, PURPLE); // JUDGEMENT LINE
 };
 
-void Display::makeBeatLines(Metronome *metronome_, bool passed) {
+void Display::makeBeatLines(Metronome *metronome_) {
   int judgementX = 200;
   int spacing = 100;
 
@@ -60,10 +60,6 @@ void Display::makeBeatLines(Metronome *metronome_, bool passed) {
     // Position 0 = judgment line, negative = left of judgment, positive = right
     int xPos = judgementX + (line.displayPosition * spacing);
 
-    auto color = BLUE;
-    if (xPos == judgementX && passed) {
-      color = RED;
-    }
-    DrawCircle(xPos, 300, 50, color);
+    DrawCircle(xPos, 300, 50, BLUE);
   }
 }

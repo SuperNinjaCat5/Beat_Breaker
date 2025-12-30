@@ -104,16 +104,13 @@ int main() {
 
     judge.update(metronome.getLastBeat());
 
-    bool spacePressed = IsKeyPressed(KEY_SPACE);
-    bool inputJudged = false;
-    bool passed =
-        judge.judgeJuryEXECUTIONER(&metronome, spacePressed, inputJudged);
+    bool passed = judge.judgeJuryEXECUTIONER(&metronome);
 
-    std::cout << referee.getLivesLeft() << "\n";
+    if (!passed) {
+      std::cout << std::boolalpha << passed << "\n";
+    }
 
-    if (!referee.update(passed, judge.getCurrentGoalBeat(),
-                        metronome.getActiveBeat(), metronome.getLastBeat(),
-                        inputJudged)) {
+    if (!referee.update(passed)) {
       break;
     };
 
@@ -121,10 +118,10 @@ int main() {
 
     // ########## Display ##########
 
-    ClearBackground(BLACK);
-
     display.drawJudgementLine();
-    display.makeBeatLines(&metronome, passed);
+    display.makeBeatLines(&metronome);
+
+    ClearBackground(BLACK);
 
     EndDrawing();
   }
