@@ -49,8 +49,8 @@ void Display::drawJudgementLine() {
 };
 
 void Display::makeBeatLines(Metronome *metronome_) {
-  int judgementX = 200;
-  int spacing = 100;
+  constexpr int judgementX = 200;
+  constexpr int spacing = 100;
 
   for (const auto &line : upcomingBeats) {
     if (!line.hasBeat) {
