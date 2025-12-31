@@ -52,7 +52,6 @@ int main() {
 
   while (!WindowShouldClose()) {
     BeginDrawing();
-    ClearBackground(BLACK);
 
     // #####################################
     // START MENU
@@ -107,14 +106,11 @@ int main() {
 
     bool passed = judge.judgeJuryEXECUTIONER(&metronome);
 
-    if (passed) {
-      std::cout << "I AM THE EYE THE TIGERRRR THRILL OF DA FIGHT" << "\n";
+    if (!passed) {
+      std::cout << std::boolalpha << referee.getLivesLeft() << "\n";
     }
 
-    display.markJudgement(passed, 3);
-
-    bool stillAlive = referee.update(passed, metronome.getActiveBeat());
-    if (!stillAlive) {
+    if (!referee.update(passed, metronome.getActiveBeat())) {
       break;
     };
 
@@ -124,6 +120,8 @@ int main() {
 
     display.drawJudgementLine();
     display.makeBeatLines(&metronome);
+
+    ClearBackground(BLACK);
 
     EndDrawing();
   }

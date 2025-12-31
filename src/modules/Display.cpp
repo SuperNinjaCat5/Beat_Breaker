@@ -10,12 +10,9 @@ Display::Display() {}; // Consturctor
 
 // Fetch
 int Display::getScreenWidth() { return screenWidth; }
-
 int Display::getScreenHeight() { return screenHeight; }
-
-Chart Display::getCurrentChart() { return currentChart; }
-
-std::array<Beatline, 12> &Display::getUpcomingBeats() { return upcomingBeats; }
+Chart Display::getCurrentChart() { return currentChart; };
+std::array<Beatline, 12> &Display::getUpcomingBeats() { return upcomingBeats; };
 
 // Actions ##############################
 void Display::update(
