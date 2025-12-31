@@ -4,9 +4,14 @@
 #include <array>
 #include <raylib.h>
 
+enum class BeatState { Upcoming, Hit, Missed };
+
 struct Beatline {
   int displayPosition; // -3 to 8 (-3=passed, 0=judgment, 8=entrance)
   bool hasBeat = false;
+
+  BeatState state = BeatState::Upcoming;
+  bool frozen = false;
 };
 
 class Display {

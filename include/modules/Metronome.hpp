@@ -8,7 +8,7 @@ private:
   float nextBeatPosition = beatDurationMs;
 
   int lastBeat = 0;
-  int marginMs = 80;
+  int marginMs = 150;
 
   int activeBeat = -1; // Open during the timeframe for beat
   float activeBeatStartPosition = nextBeatPosition - marginMs;

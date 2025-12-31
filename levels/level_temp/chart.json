@@ -3,6 +3,7 @@
     "songPath": "assets/audio/But-First-A-Word-from-our.mp3",
     "bpm": 120,
     "notes": [
+        {"beat": 2, "subBeat": 0.0},
         { "beat": 5, "subBeat": 0.0 },
         { "beat": 8, "subBeat": 0.0 },
         { "beat": 9, "subBeat": 0.0 },
